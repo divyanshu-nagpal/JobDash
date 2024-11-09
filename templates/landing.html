@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>JobDash - Track Your Job Applications Seamlessly</title>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+   <style>
+       /* Enhanced Minimalist Design */
+       body {
+           font-family: 'Inter', sans-serif;
+       }
+       .nav-link::after {
+           content: "";
+           display: block;
+           width: 0;
+           height: 2px;
+           background: #4f46e5;
+           transition: width 0.3s;
+           margin-top: 2px;
+       }
+       .nav-link:hover::after {
+           width: 100%;
+       }
+       .fade-in-up {
+           animation: fadeInUp 1s ease-out forwards;
+           opacity: 0;
+       }
+       @keyframes fadeInUp {
+           from { opacity: 0; transform: translateY(20px); }
+           to { opacity: 1; transform: translateY(0); }
+       }
+       .hover-lift:hover {
+           transform: translateY(-4px);
+           transition: transform 0.3s ease;
+       }
+       .feature-card {
+           transition: transform 0.3s ease, box-shadow 0.3s ease;
+       }
+       .feature-card:hover {
+           transform: translateY(-10px);
+           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+       }
+       .feature-heading {
+           font-size: 2.5rem;
+           font-weight: 800;
+           color: #4A4A4A;
+           text-transform: uppercase;
+           letter-spacing: 1px;
+           margin-bottom: 1rem;
+       }
+       .section-heading {
+           font-size: 3rem;
+           font-weight: 900;
+           color: #4A4A4A;
+           text-transform: uppercase;
+           letter-spacing: 1px;
+           margin-bottom: 2rem;
+       }
+       .section-subheading {
+           font-size: 1.25rem;
+           color: #6B7280;
+           font-weight: 400;
+           margin-bottom: 4rem;
+       }
+       .testimonials-marquee {
+           display: flex;
+           justify-content: start;
+           overflow: hidden;
+           width: 100%;
+           position: relative;
+       }
+       .testimonials-wrapper {
+           display: flex;
+           animation: marquee 20s linear infinite;
+       }
+       .testimonial-card {
+           min-width: 300px;
+           padding: 2rem;
+           background-color: #fff;
+           margin-right: 2rem;
+           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+           border-radius: 8px;
+           flex-shrink: 0;
+       }
+       @keyframes marquee {
+           0% { transform: translateX(0); }
+           100% { transform: translateX(-100%); }
+       }
+   </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+   <!-- Header -->
+   <header class="flex justify-between items-center p-6 bg-white shadow-md">
+      <div class="text-3xl font-extrabold text-indigo-600">JobDash.</div>
+      <nav class="flex space-x-6">
+         <a href="#features" class="nav-link text-gray-800 hover:text-indigo-600 transition">Features</a>
+         <a href="#testimonials" class="nav-link text-gray-800 hover:text-indigo-600 transition">Testimonials</a>
+         <a href="#contact" class="nav-link text-gray-800 hover:text-indigo-600 transition">Contact</a>
+      </nav>
+      <a href="register" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">Get Started</a>
+   </header>
+
+   <!-- Hero Section -->
+   <section class="flex flex-col items-center text-center py-20 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4 fade-in-up">Effortlessly Track Job Applications</h1>
+      <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-xl fade-in-up">Streamline your job search with an intuitive and powerful application tracker.</p>
+      <a href="login" class="px-8 py-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-lg fade-in-up">Start Tracking for Free</a>
+   </section>
+
+   <!-- Features Section -->
+   <section id="features" class="py-20 bg-white">
+      <h2 class="feature-heading text-center fade-in-up">Features</h2>
+      <div class="flex flex-wrap justify-center gap-8">
+         <div class="w-full sm:w-1/2 md:w-1/4 p-6 bg-indigo-50 rounded-lg text-center shadow-md hover-lift feature-card fade-in-up">
+            <div class="text-indigo-500 mb-4 text-5xl">📑</div>
+            <h3 class="text-xl font-semibold text-gray-700">Track Applications</h3>
+            <p class="text-gray-600 mt-2">Easily save, edit, and organize all your applications.</p>
+         </div>
+         <div class="w-full sm:w-1/2 md:w-1/4 p-6 bg-indigo-50 rounded-lg text-center shadow-md hover-lift feature-card fade-in-up">
+            <div class="text-indigo-500 mb-4 text-5xl">📅</div>
+            <h3 class="text-xl font-semibold text-gray-700">Organized Dashboard</h3>
+            <p class="text-gray-600 mt-2">Filter by status, company, and date to stay organized.</p>
+         </div>
+         <div class="w-full sm:w-1/2 md:w-1/4 p-6 bg-indigo-50 rounded-lg text-center shadow-md hover-lift feature-card fade-in-up">
+            <div class="text-indigo-500 mb-4 text-5xl">⏰</div>
+            <h3 class="text-xl font-semibold text-gray-700">Reminders & Alerts</h3>
+            <p class="text-gray-600 mt-2">Set reminders for follow-ups and interviews.</p>
+         </div>
+      </div>
+   </section>
+
+   <!-- Testimonials Section -->
+   <section id="testimonials" class="py-20 bg-gray-100">
+      <h2 class="section-heading text-center">User Feedback</h2>
+      <p class="section-subheading text-center">What our users say about JobDash</p>
+
+      <div class="testimonials-marquee">
+         <div class="testimonials-wrapper">
+            <div class="testimonial-card">
+               <p class="text-gray-600 italic">"JobDash streamlined my job search process like never before. It's a must-have tool!"</p>
+               <p class="mt-4 font-bold text-gray-800">- Alex M.</p>
+            </div>
+            <div class="testimonial-card">
+               <p class="text-gray-600 italic">"I love how simple and effective JobDash is. It truly made a difference in my job hunt!"</p>
+               <p class="mt-4 font-bold text-gray-800">- Mia T.</p>
+            </div>
+            <div class="testimonial-card">
+               <p class="text-gray-600 italic">"An intuitive platform that helped me stay organized and focused throughout my job applications!"</p>
+               <p class="mt-4 font-bold text-gray-800">- John D.</p>
+            </div>
+            <div class="testimonial-card">
+               <p class="text-gray-600 italic">"JobDash saved me so much time! I was able to track all my applications in one place!"</p>
+               <p class="mt-4 font-bold text-gray-800">- Sarah W.</p>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Contact Section -->
+   <section id="contact" class="py-20 bg-white">
+      <p class="section-subheading text-center fade-in-up">Have questions or need support? Reach out to us and we’ll be happy to assist you.</p>
+      <div class="flex justify-center">
+         <a href="mailto:jobdash.care24x7@gmail.com" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-lg">Contact Us</a>
+      </div>
+   </section>
+
+    <!-- Footer -->
+    <footer class="p-6 bg-gray-800 text-white text-center">
+        <p class="mb-4">&copy; 2024 JobDash. All rights reserved.</p>
+        <div class="flex justify-center space-x-6">
+        <a href="#" class="text-gray-400 hover:text-white">Twitter</a>
+        <a href="#" class="text-gray-400 hover:text-white">Facebook</a>
+        <a href="#" class="text-gray-400 hover:text-white">LinkedIn</a>
+        </div>
+    </footer>
+
+</body>
+</html>

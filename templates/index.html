@@ -1,60 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Job Application Tracker</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/logo2.jpeg" type="image/jpeg">
+    <title>JobDash - Application Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" href="/static/logo2.jpeg"  type="image/jpeg">
-        <style>
-        /* Custom Zoom-out effect */
-        body {
-            zoom: 1.2; /* Adjust this value to scale down or up the entire page */
-        }
+    <style>
         
-        /* Colored dot indicator */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-link::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #4f46e5;
+            transition: width 0.3s;
+            margin-top: 2px;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        /* Style for active link */
+        .nav-link.active {
+            color: #4f46e5; /* Active link color */
+            font-weight: 600; /* Make it bold */
+        }
+        .feature-heading {
+           font-size: 2rem;
+           font-weight: 800;
+           color: #4A4A4A;
+           letter-spacing: 1px;
+           animation: fadeInUp 1s ease-out forwards;
+           opacity: 0;
+       }
+
+       @keyframes fadeInUp {
+           from { opacity: 0; transform: translateY(20px); }
+           to { opacity: 1; transform: translateY(0); }
+       }
         .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             display: inline-block;
             margin-right: 8px;
         }
-        .status-accepted { background-color: #28a745; } /* Green */
-        .status-pending { background-color: #ffa500; } /* Orange */
-        .status-declined { background-color: #dc3545; } /* Red */
+        .status-accepted { background-color: #28a745; }
+        .status-pending { background-color: #ffa500; }
+        .status-declined { background-color: #dc3545; }
     </style>
 </head>
-<body class="bg-gray-100 font-sans antialiased">
-    <div class="max-w-3xl mx-auto p-4">
-        <!-- Title -->
-        <h1 class="text-2xl font-semibold text-center text-gray-800">Job Application Tracker</h1>
-        <br>
+<body class="bg-gray-50 text-gray-800 antialiased">
 
-        <!-- Search Bar -->
-        <div class="mb-4">
-            <input type="text" id="search" placeholder="Search by job title or company..." class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+    <!-- Header -->
+    <header class="flex justify-between items-center p-6 bg-white shadow-md">
+        <div class="text-3xl font-extrabold text-indigo-600">JobDash.</div>
+        <nav class="flex space-x-6">
+            <a href="dashboard" class="nav-link text-gray-800 hover:text-indigo-600 transition" id="dashboard-link">Dashboard</a>
+            <a href="index" class="nav-link text-gray-800 hover:text-indigo-600 transition" id="applications-link">Applications</a>
+            <a href="about" class="nav-link text-gray-800 hover:text-indigo-600 transition" id="about-link">About Us</a>
+         </nav>         
+        <div class="relative">
+           <button class="focus:outline-none" onclick="toggleDropdown()">
+              <img src="path/to/profile-pic.jpg" alt="Profile" class="w-10 h-10 rounded-full border-2 border-indigo-600">
+           </button>
+           <div id="dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
+              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Profile</a>
+              <a href="logout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+           </div>
+        </div>
+     </header>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto py-20 px-6">
+        <!-- Title Section -->
+        <div class="text-center mb-10">
+            <h1 class="feature-heading text-center">Manage Your Job Applications</h1>
+            <p class="text-gray-600 mt-3 text-lg">Track, organize, and stay updated on all your job applications in one place.</p>
         </div>
 
-        <!-- Add New Application Button -->
-        <a href="{{ url_for('add_application') }}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded mb-4 inline-block text-sm">Add New Application</a>
+        <!-- Search & Add Button Section -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-10">
+            <div class="w-full md:w-1/2 mb-4 md:mb-0">
+                <input type="text" id="search" placeholder="Search by job title or company..." class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+            </div>
+            <a href="{{ url_for('add_application') }}" class="mt-4 md:mt-0 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium"><span class=" text-lg font-semibold">+ </span>
+                <h>New Application</a>
+            
+        </div>
 
-        <!-- Sort & Filter -->
-        <div class="mb-4 flex justify-between">
-            <!-- Sort Dropdown -->
-            <div>
-                <label for="sort" class="text-base">Sort by:</label>
-                <select id="sort" class="ml-2 px-3 py-2 border rounded-md text-sm">
+        <!-- Sort & Filter Section -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-10">
+            <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                <label for="sort" class="block text-gray-700 text-sm font-medium mb-2">Sort by:</label>
+                <select id="sort" class="w-full px-4 py-3 border rounded-lg text-sm">
                     <option value="" selected disabled>Select</option>
                     <option value="job_title">Job Title</option>
                     <option value="company">Company</option>
                 </select>
             </div>
-
-            <!-- Filter Dropdown -->
-            <div>
-                <label for="filter" class="text-base">Filter by status:</label>
-                <select id="filter" class="ml-2 px-3 py-2 border rounded-md text-sm">
+            <div class="w-full md:w-1/3">
+                <label for="filter" class="block text-gray-700 text-sm font-medium mb-2">Filter by status:</label>
+                <select id="filter" class="w-full px-4 py-3 border rounded-lg text-sm">
                     <option value="all">All</option>
                     <option value="accepted">Accepted</option>
                     <option value="pending">Pending</option>
@@ -64,57 +116,62 @@
         </div>
 
         <!-- Job Applications List -->
-        <ul id="application-list" class="space-y-3">
+        <ul id="application-list" class="space-y-4">
             {% for application in applications %}
-                <li class="bg-white shadow-md rounded-lg p-3 flex justify-between items-center text-sm" data-status="{{ application[3] | lower }}">
+                <li class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center text-sm" data-status="{{ application[3] | lower }}">
                     <div>
-                        <p class="font-semibold">{{ application[1] }} at {{ application[2] }}</p>
+                        <p class="text-xl font-semibold text-gray-800">{{ application[1] }} at {{ application[2] }}</p>
                         <p class="text-gray-500 flex items-center">
-                            <!-- Colored Dot for Status -->
                             <span class="status-dot {% if application[3] == 'Accepted' %}status-accepted{% elif application[3] == 'Pending' %}status-pending{% elif application[3] == 'Declined' %}status-declined{% endif %}"></span>
                             {{ application[3] }}
                         </p>
                     </div>
-                    <div class="space-x-3">
+                    <div class="space-x-4 flex items-center">
                         {% if application[5] %}
-                            <!-- Link Icon -->
-                            <a href="{{ application[5] }}" target="_blank" class="text-blue-500 hover:text-blue-700">
+                            <a href="{{ application[5] }}" target="_blank" class="text-blue-600 hover:text-blue-800 transition">
                                 <i class="fas fa-link"></i>
                             </a>
                         {% endif %}
-                        <a href="{{ url_for('edit_application', id=application[0]) }}" class="text-blue-500 hover:text-blue-700">
+                        <a href="{{ url_for('edit_application', id=application[0]) }}" class="text-yellow-600 hover:text-yellow-800 transition">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="{{ url_for('delete_application', id=application[0]) }}" class="text-red-500 hover:text-red-700">
+                        <a href="{{ url_for('delete_application', id=application[0]) }}" class="text-red-600 hover:text-red-800 transition">
                             <i class="fas fa-trash-alt"></i>
                         </a>
-                    </div>                    
+                    </div>
                 </li>
             {% endfor %}
         </ul>
 
-        <!-- Pagination (Example) -->
-        <div class="flex justify-center mt-4">
-            <button class="bg-gray-300 hover:bg-gray-400 text-black px-3 py-2 rounded-md text-sm">Previous</button>
-            <button class="bg-gray-300 hover:bg-gray-400 text-black px-3 py-2 rounded-md mx-2 text-sm">Next</button>
+        <!-- Pagination -->
+        <div class="flex justify-center mt-10">
+            <button class="bg-gray-300 hover:bg-gray-400 text-black px-5 py-3 rounded-lg text-sm font-medium">Previous</button>
+            <button class="bg-gray-300 hover:bg-gray-400 text-black px-5 py-3 rounded-lg mx-3 text-sm font-medium">Next</button>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="p-6 bg-gray-800 text-white text-center">
+        <p class="mb-4">&copy; 2024 JobDash. All rights reserved.</p>
+        <div class="flex justify-center space-x-6">
+           <a href="#" class="text-gray-400 hover:text-white">Twitter</a>
+           <a href="#" class="text-gray-400 hover:text-white">Facebook</a>
+           <a href="#" class="text-gray-400 hover:text-white">LinkedIn</a>
+        </div>
+     </footer>  
+
     <!-- Toast Notifications -->
-    <div id="toast-added" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 p-3 bg-green-500 text-white rounded-lg shadow-md hidden text-sm">
+    <div id="toast-added" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 p-4 bg-green-500 text-white rounded-lg shadow-md hidden text-sm font-medium">
         Application Added Successfully!
     </div>
-
-    <div id="toast-deleted" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 p-3 bg-red-500 text-white rounded-lg shadow-md hidden text-sm">
+    <div id="toast-deleted" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 p-4 bg-red-500 text-white rounded-lg shadow-md hidden text-sm font-medium">
         Application Deleted Successfully!
     </div>
-
-    <div id="toast-edit" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 p-3 bg-yellow-500 text-white rounded-lg shadow-md hidden text-sm">
+    <div id="toast-edit" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 p-4 bg-yellow-500 text-white rounded-lg shadow-md hidden text-sm font-medium">
         Application Edited Successfully!
     </div>
 
     <script>
-        // Function to show a toast
         function showToast(toastId) {
             const toast = document.getElementById(toastId);
             if (toast) {
@@ -123,24 +180,17 @@
                     toast.classList.add('hidden');
                     const url = new URL(window.location.href);
                     url.searchParams.delete('status');
-                    window.history.replaceState({}, document.title,url);
+                    window.history.replaceState({}, document.title, url);
                 }, 2000);
             }
         }
 
-        // Check for the 'status' parameter in the URL
         const urlParams = new URLSearchParams(window.location.search);
         const status = urlParams.get('status');
+        if (status === 'added') showToast('toast-added');
+        else if (status === 'deleted') showToast('toast-deleted');
+        else if (status === 'edited') showToast('toast-edit');
 
-        if (status === 'added') {
-            showToast('toast-added');
-        } else if (status === 'deleted') {
-            showToast('toast-deleted');
-        } else if (status === 'edited') {
-            showToast('toast-edit');
-        }
-
-        // Search Functionality
         const searchInput = document.getElementById('search');
         const applicationList = document.getElementById('application-list');
         searchInput.addEventListener('input', function() {
@@ -157,7 +207,6 @@
             });
         });
 
-        // Sort Functionality
         const sortSelect = document.getElementById('sort');
         sortSelect.addEventListener('change', function() {
             const sortBy = sortSelect.value;
@@ -176,7 +225,6 @@
             applications.forEach(app => applicationList.appendChild(app));
         });
 
-        // Filter Functionality
         const filterSelect = document.getElementById('filter');
         filterSelect.addEventListener('change', function() {
             const filterValue = filterSelect.value;
@@ -190,6 +238,46 @@
                 }
             });
         });
+
+        // Toggle Dropdown visibility
+      function toggleDropdown() {
+         document.getElementById("dropdown").classList.toggle("hidden");
+      }
+
+      // Close dropdown when clicking outside
+      window.addEventListener("click", function(event) {
+         const dropdown = document.getElementById("dropdown");
+         if (!event.target.closest("button") && !event.target.closest("#dropdown")) {
+            dropdown.classList.add("hidden");
+         }
+      });
+
+      // Add active class to the current page link in the navbar
+        function setActiveLink() {
+            const currentUrl = window.location.href;
+
+            const dashboardLink = document.getElementById("dashboard-link");
+            const applicationsLink = document.getElementById("applications-link");
+            const aboutLink = document.getElementById("about-link");
+
+            // Reset all links to remove active class
+            dashboardLink.classList.remove("active");
+            applicationsLink.classList.remove("active");
+            aboutLink.classList.remove("active");
+
+            // Set active class based on the current page URL
+            if (currentUrl.includes("dashboard")) {
+                dashboardLink.classList.add("active");
+            } else if (currentUrl.includes("applications")) {
+                applicationsLink.classList.add("active");
+            } else if (currentUrl.includes("about")) {
+                aboutLink.classList.add("active");
+            }
+        }
+
+        // Call the function to set the active link
+        setActiveLink();
+
     </script>
 </body>
 </html>
