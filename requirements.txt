@@ -6,3 +6,4 @@ Flask-sqlalchemy
 Flask-Mail
 python-dotenv
 itsdangerous
+gunicorn
